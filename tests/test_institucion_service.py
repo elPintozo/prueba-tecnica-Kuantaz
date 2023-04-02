@@ -12,17 +12,20 @@ class TestInstitucion(unittest.TestCase):
         self.institucion_data = {
                 'nombre': 'Institucion maderera',
                 'descripcion': 'Expertos en madera.',
-                'direccion': 'El bosque #111, Santiago, Chile.'
+                'direccion': 'El bosque #111, Santiago, Chile.',
+                'fecha_creacion': '2010-01-01'
             }
         self.institucion_2_data = {
                 'nombre': 'Institucion acerera',
                 'descripcion': 'Expertos en metales.',
-                'direccion': 'El pilar #222, Las condes, Chile.'
+                'direccion': 'El pilar #222, Las condes, Chile.',
+                'fecha_creacion': '2011-01-01'
             }
         self.institucion_update_data = {
                 'nombre': 'Institucion maderera',
                 'descripcion': 'Expertos en madera y planchas de melamina.',
-                'direccion': 'El bosque #333, Santiago, Chile.'
+                'direccion': 'El bosque #333, Santiago, Chile.',
+                'fecha_creacion': '2019-01-01'
             }
         self.app = Flask('testing')
         self.app.config['SQLALCHEMY_DATABASE_URI'] = get_database_uri_test()
@@ -135,3 +138,36 @@ class TestInstitucion(unittest.TestCase):
             # Verificar que la institución ya no existe en la base de datos
             institucion_eliminada = Institucion.query.filter_by(id=institucion.id).first()
             self.assertIsNone(institucion_eliminada)
+    
+    def test_get_proyectos_tiempo_restante(self):
+        with self.app.test_client() as client:
+            institucion = Institucion(**self.institucion_data)
+
+            with self.app.app_context():
+                db.session.add(institucion)
+                db.session.commit()
+                institucion = Institucion.query.get(institucion.id)
+
+            with self.app.app_context():
+                response = client.get(f'/instituciones/detalle-proyecto-y-responsables/{institucion.id}')
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('proyectos', response.json)
+            self.assertIsInstance(response.json['proyectos'], list)
+    
+    def test_get_instituciones_con_direccion(self):
+        with self.app.test_client() as client:
+            address_google = 'https://www.google.com/maps/search/'
+            # Creamos una institución de prueba
+            institucion = Institucion(**self.institucion_data)
+
+            with self.app.app_context():
+                db.session.add(institucion)
+                db.session.commit()
+
+            response = client.get(f'/instituciones/con-direccion')
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIsInstance(response.json, list)
+            self.assertIn(address_google, response.json[0]['direccion'])
+            

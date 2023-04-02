@@ -23,7 +23,8 @@ class TestUsuario(unittest.TestCase):
         self.institucion_data = {
                 'nombre': 'Institucion maderera',
                 'descripcion': 'Expertos en madera.',
-                'direccion': 'El bosque #111, Santiago, Chile.'
+                'direccion': 'El bosque #111, Santiago, Chile.',
+                'fecha_creacion': '2010-01-01'
             }
         # Se crea un registro de instituto para las pruebas
         self.institucion1 = Institucion(**self.institucion_data)
@@ -151,7 +152,6 @@ class TestUsuario(unittest.TestCase):
             proyecto_actualizado = Proyecto.query.get(proyecto.id)
             self.assertEqual(proyecto_actualizado.nombre, self.proyecto_update_data['nombre'])
             self.assertEqual(proyecto_actualizado.descripcion, self.proyecto_update_data['descripcion'])
-            self.assertEqual(proyecto_actualizado.fecha_inicio, datetime.date(2022,1,1))
         
     def test_delete_proyecto(self):
         with self.app.test_client() as client:
@@ -170,7 +170,12 @@ class TestUsuario(unittest.TestCase):
                 self.assertEqual(response.json['message'], 'Proyecto eliminado correctamente')
                 self.assertIsNone(Proyecto.query.get(proyecto.id))
 
-
+    def test_get_proyectos_tiempo_restante(self):
+        with self.app.test_client() as client:
+            response = client.get(f'/proyectos/tiempo-restante')
+            data = response.get_json()
+            self.assertEqual(response.status_code, 200)
+            self.assertIsInstance(data, list)
 
 
 

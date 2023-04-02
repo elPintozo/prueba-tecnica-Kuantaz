@@ -1,6 +1,7 @@
 from models.modelos import Usuario
 from flask import Blueprint, jsonify, request
 from config import db
+from sqlalchemy.exc import IntegrityError
 
 usuario_endpoint = Blueprint('usuario', __name__)
 
@@ -9,8 +10,14 @@ usuario_endpoint = Blueprint('usuario', __name__)
 def create_usuario():
     data = request.json
     new_usuario = Usuario(**data)
-    db.session.add(new_usuario)
-    db.session.commit()
+    try:
+        if len(new_usuario.validate())!=0:
+             return jsonify({'message': 'Error al crear el usuario', 'error:': new_usuario.validate()})
+        db.session.add(new_usuario)
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({'error': 'El usuario ya existe en la base de datos'})
     return jsonify({'message': 'Usuario creado correctamente', 'id': new_usuario.id})
 
 # READ ALL
@@ -26,7 +33,8 @@ def get_usuarios():
             'rut': usuario.rut,
             'fecha_nacimiento': str(usuario.fecha_nacimiento),
             'cargo': usuario.cargo,
-            'edad': usuario.edad
+            'edad': usuario.edad,
+            'proyectos': [proyecto.id for proyecto in usuario.proyectos]
         })
     return jsonify({'usuarios': usuarios_list})
 
@@ -42,11 +50,31 @@ def get_usuario(id):
             'rut': usuario.rut,
             'fecha_nacimiento': str(usuario.fecha_nacimiento),
             'cargo': usuario.cargo,
-            'edad': usuario.edad
+            'edad': usuario.edad,
+            'proyectos': [proyecto.id for proyecto in usuario.proyectos]
         }
         return jsonify(usuario_dict)
     else:
         return jsonify({'message': 'Usuario no encontrado'})
+
+# READ ONE FROM RUT
+@usuario_endpoint.route('/usuarios/por-rut/<string:rut>', methods=['GET'])
+def get_usuario_por_rut(rut):
+    usuario = Usuario.query.filter_by(rut=rut).first()
+    if usuario:
+        usuario_dict = {
+            'id': usuario.id,
+            'nombre': usuario.nombre,
+            'apellidos': usuario.apellidos,
+            'rut': usuario.rut,
+            'fecha_nacimiento': str(usuario.fecha_nacimiento),
+            'cargo': usuario.cargo,
+            'edad': usuario.edad,
+            'proyectos': [proyecto.id for proyecto in usuario.proyectos]
+        }
+        return jsonify(usuario_dict)
+    else:
+        return jsonify({'message': f'Usuario RUT:{rut} no encontrado.'})
 
 # UPDATE
 @usuario_endpoint.route('/usuarios/<int:id>', methods=['PUT'])

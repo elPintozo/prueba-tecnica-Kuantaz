@@ -1,0 +1,628 @@
+{
+	"info": {
+		"_postman_id": "bd984539-fbd1-44bb-ba18-1b41222338fc",
+		"name": "Kuantaz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API usuarios",
+			"item": [
+				{
+					"name": "Get usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/usuarios",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuarios with rut",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/usuarios/por-rut/16345678-9",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios",
+								"por-rut",
+								"16345678-9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Andres\",\n    \"apellidos\": \"Perez\",\n    \"rut\": \"18345678-9\",\n    \"fecha_nacimiento\": \"1990-06-01\",\n    \"cargo\": \"Operador\",\n    \"edad\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/usuarios",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dsds",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/usuarios/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Juan\",\n    \"apellidos\": \"Arce\",\n    \"rut\": \"13345678-9\",\n    \"fecha_nacimiento\": \"1990-01-01\",\n    \"cargo\": \"Gerente\",\n    \"edad\": 33\n}"
+						},
+						"url": {
+							"raw": "{{server}}/usuarios/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{server}}/usuarios/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API instituciones",
+			"item": [
+				{
+					"name": "Get instituciones",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/instituciones",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get instituciones con direccion",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/instituciones/con-direccion",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones",
+								"con-direccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get instituciones con proyecto y responsable",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/instituciones/detalle-proyecto-y-responsables/3",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones",
+								"detalle-proyecto-y-responsables",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create institucion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Institucion maderera\",\n    \"descripcion\": \"Expertos en madera.\",\n    \"direccion\": \"El bosque #111, Santiago, Chile.\",\n    \"fecha_creacion\": \"2010-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/instituciones",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update institucion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Institucion maderera\",\n    \"descripcion\": \"Expertos en madera.\",\n    \"direccion\": \"El bosque #111, Santiago, Chile.\",\n    \"fecha_creacion\": \"2012-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/instituciones/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get institucion",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/instituciones/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete institucion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/instituciones/2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"instituciones",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API proyectos",
+			"item": [
+				{
+					"name": "Get proyectos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/proyectos",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get proyectos con días restantes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/proyectos/tiempo-restante",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos",
+								"tiempo-restante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete proyectos",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/proyectos/9",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create proyectos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto uno\",\n    \"descripcion\": \"Empieza con retrasos\",\n    \"fecha_inicio\": \"2023-01-01\",\n    \"fecha_termino\": \"2024-01-01\",\n    \"responsable_id\": 3,\n    \"institucion_id\": 3\n}"
+						},
+						"url": {
+							"raw": "{{server}}/proyectos",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update proyectos",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Proyecto uno\",\n    \"descripcion\": \"Proyecto con retrasos y con falta de presupuestos\",\n    \"fecha_inicio\": \"2023-01-01\",\n    \"fecha_termino\": \"2024-01-01\",\n    \"responsable_id\": 3,\n    \"institucion_id\": 3\n}"
+						},
+						"url": {
+							"raw": "{{server}}/proyectos/11",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get proyecto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/proyectos/11",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"proyectos",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API general",
+			"item": [
+				{
+					"name": "Get todo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/todo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

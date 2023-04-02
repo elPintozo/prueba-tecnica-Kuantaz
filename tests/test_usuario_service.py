@@ -153,3 +153,24 @@ class TestUsuario(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.json['message'], 'Usuario eliminado correctamente')
             self.assertIsNone(Usuario.query.get(usuario1.id))
+
+    def test_get_usuario_por_rut(self):
+        with self.app.test_client() as client:
+
+            usuario1 = Usuario(**self.usuario_data)
+
+            with self.app.app_context():
+                db.session.add(usuario1)
+                db.session.commit()
+
+                # Hacer una petición GET al endpoint /usuarios
+                response = client.get(f'/usuarios/por-rut/{usuario1.rut}')
+
+            # Verificar que la respuesta fue exitosa
+            self.assertEqual(response.status_code, 200)
+            
+            data = response.json
+            self.assertEqual(data['nombre'], self.usuario_data['nombre'])
+            self.assertEqual(data['cargo'], self.usuario_data['cargo'])
+            self.assertEqual(data['apellidos'], self.usuario_data['apellidos'])
+            self.assertEqual(data['edad'], self.usuario_data['edad'])
