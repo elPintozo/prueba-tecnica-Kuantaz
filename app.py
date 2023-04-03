@@ -1,15 +1,29 @@
+import json
+from pathlib import Path
 from flask import Flask
 from apis.usuario_service import usuario_endpoint
 from apis.institucion_service import institucion_endpoint
 from apis.proyecto_service import proyecto_endpoint
 from apis.general_service import general_endpoint
-from config import Config, get_db_conn 
-from flask_restful import Api
+from config import Config 
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
 # Swagger config
-api = Api(app)
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
+
+# Call factory function to create our blueprint
+swaggerui_blueprint = get_swaggerui_blueprint(
+    '/api/docs',  
+    API_URL,
+    config={ 
+        'app_name': "Test application"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint)
 
 # Sqlalchemy config
 app.config.from_object(Config)
@@ -20,10 +34,6 @@ app.register_blueprint(institucion_endpoint)
 app.register_blueprint(proyecto_endpoint)
 app.register_blueprint(general_endpoint)
 
-@app.route('/')
-def hello_world():
-    conn, cursor = get_db_conn()
-    return 'Hola, mundo!'
 
 if __name__ == '__main__':
     app.run(debug=True)

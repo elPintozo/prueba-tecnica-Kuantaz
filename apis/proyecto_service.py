@@ -13,13 +13,13 @@ def create_proyecto():
     proyecto = Proyecto(**data)
     try:
         if len(proyecto.validate())!=0:
-             return jsonify({'message': 'Error al crear el proyecto', 'error:': proyecto.validate()})
+             return jsonify({'message': 'Error al crear el proyecto', 'error:': proyecto.validate()}), 400
         db.session.add(proyecto)
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'message': 'Error al crear el proyecto: {}'.format(str(e.orig))})
-    return jsonify({'message': 'Proyecto creado correctamente', 'id': proyecto.id})
+        return jsonify({'message': 'Error al crear el proyecto: {}'.format(str(e.orig))}), 400
+    return jsonify({'message': 'Proyecto creado correctamente', 'id': proyecto.id}), 201
 
 # READ ALL
 @proyecto_endpoint.route('/proyectos', methods=['GET'])

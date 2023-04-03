@@ -55,7 +55,7 @@ class TestUsuario(unittest.TestCase):
             response = client.post('/usuarios', json=self.usuario_data)
 
             # Comprueba que el usuario fue creado con éxito
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 201)
             self.assertIn('id', response.json)
 
             # Obtiene el usuario creado
@@ -68,6 +68,26 @@ class TestUsuario(unittest.TestCase):
             self.assertEqual(usuario.fecha_nacimiento, datetime.date(1990,1,1))
             self.assertEqual(usuario.cargo, 'Gerente')
             self.assertEqual(usuario.edad, 30)
+
+    def test_error_create_usuario(self):
+        with self.app.test_client() as client:
+            self.usuario_data['edad'] = "35"
+            response = client.post('/usuarios', json=self.usuario_data)
+
+            # Comprueba que el usuario fue creado con éxito
+            self.assertEqual(response.status_code, 400)
+            self.assertIn('message', response.json)
+            self.assertIn('Error al crear el usuario', response.json['message'])
+
+    def test_error_duplicate_create_usuario(self):
+        with self.app.test_client() as client:
+            response_1 = client.post('/usuarios', json=self.usuario_data)
+            response_2 = client.post('/usuarios', json=self.usuario_data)
+
+            # Comprueba que el usuario fue creado con éxito
+            self.assertEqual(response_2.status_code, 409)
+            self.assertIn('message', response_2.json)
+            self.assertIn('El usuario ya existe en la base de datos', response_2.json['message'])
 
     def test_get_usuarios(self):
         with self.app.test_client() as client:

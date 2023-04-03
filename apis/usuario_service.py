@@ -12,13 +12,13 @@ def create_usuario():
     new_usuario = Usuario(**data)
     try:
         if len(new_usuario.validate())!=0:
-             return jsonify({'message': 'Error al crear el usuario', 'error:': new_usuario.validate()})
+             return jsonify({'message': 'Error al crear el usuario', 'error:': new_usuario.validate()}), 400
         db.session.add(new_usuario)
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'error': 'El usuario ya existe en la base de datos'})
-    return jsonify({'message': 'Usuario creado correctamente', 'id': new_usuario.id})
+        return jsonify({'message': 'El usuario ya existe en la base de datos'}), 409
+    return jsonify({'message': 'Usuario creado correctamente', 'id': new_usuario.id}), 201
 
 # READ ALL
 @usuario_endpoint.route('/usuarios', methods=['GET'])

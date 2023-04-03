@@ -1,0 +1,917 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Breve documentación de los ENDPOINT para la api de Kuantaz",
+        "version": "1.0.",
+        "title": "Swagger Kuantaz"
+    },
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Usuarios",
+            "description": "Operaciones relacionadas con los usuarios"
+        },
+        {
+            "name": "Instituciones",
+            "description": "Operaciones relacionadas con las instituciones"
+        },
+        {
+            "name": "Proyectos",
+            "description": "Operaciones relacionadas con los proyectos"
+        },
+        {
+            "name": "General",
+            "description": "Operaciones relacionadas con todos los modelos presentes"
+        }
+    ],
+    "paths": {
+        "/usuarios": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear un usuario",
+                "description": "Este endpoint permite crear un usuario en la base de datos.",
+                "operationId": "createUsuario",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Información del usuario a crear",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "El usuario se creó correctamente."
+                    },
+                    "400": {
+                        "description": "Hubo un error al crear el usuario."
+                    },
+                    "409": {
+                        "description": "El usuario ya existe en la base de datos."
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener todos los usuarios",
+                "description": "Retorna una lista con todos los usuarios registrados en el sistema.",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "usuarios": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "summary": "Obtener un usuario por su ID",
+                "description": "Retorna la información de un usuario en particular según su ID.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID del usuario a obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Información del usuario solicitado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Usuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualiza un usuario existente por su id",
+                "description": "Permite actualizar los datos de un usuario existente a través de su id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario a actualizar",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Datos del usuario a actualizar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar usuario por ID",
+                "description": "Elimina un usuario específico de la base de datos.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario eliminado correctamente"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario no encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/por-rut/{rut}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener usuario por RUT",
+                "description": "Obtiene la información de un usuario buscando por su RUT",
+                "parameters": [
+                    {
+                        "name": "rut",
+                        "in": "path",
+                        "description": "RUT del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario encontrado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        },
+        "/instituciones": {
+            "post": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Crea una nueva institución",
+                "description": "Este endpoint permite crear una institucion en la base de datos.",
+                "operationId": "createInstitucion",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Información de la Institucion a crear",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Institucion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Institución creada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error al crear la institución"
+                    },
+                    "409": {
+                        "description": "Error al crear la institución: la institución ya existe en la base de datos"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "description": "Obtiene una lista de todas las instituciones.",
+                "responses": {
+                    "200": {
+                        "description": "Lista de instituciones",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "usuarios": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Institucion"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituciones/con-direccion": {
+            "get": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Obtener todas las instituciones con su dirección",
+                "responses": {
+                    "200": {
+                        "description": "Lista de instituciones con su dirección",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    },
+                                    "direccion": {
+                                        "type": "string"
+                                    },
+                                    "fecha_creacion": {
+                                        "type": "string"
+                                    },
+                                    "proyectos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituciones/{id}": {
+            "get": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Obtener una institución por ID",
+                "description": "",
+                "operationId": "get_institucion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la institución a obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Institución obtenida correctamente",
+                        "schema": {
+                            "$ref": "#/definitions/Institucion"
+                        }
+                    },
+                    "404": {
+                        "description": "Institución no encontrada",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Actualiza un usuario",
+                "description": "Actualiza la información de un usuario específico",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la institucion a actualizar",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Datos de la institucion a actualizar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Institucion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Elimina una institución existente",
+                "description": "Elimina una institución existente según el ID especificado.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID de la institución a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Institucion eliminada exitosamente"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Institucion no encontrada"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituciones/detalle-proyecto-y-responsables/{id}": {
+            "get": {
+                "tags": [
+                    "Instituciones"
+                ],
+                "summary": "Obtiene los detalles de una institución con sus proyectos y responsables",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID de la institución",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la institución con sus proyectos y responsables",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "description": "ID de la institución"
+                                },
+                                "nombre": {
+                                    "type": "string",
+                                    "description": "Nombre de la institución"
+                                },
+                                "descripcion": {
+                                    "type": "string",
+                                    "description": "Descripción de la institución"
+                                },
+                                "direccion": {
+                                    "type": "string",
+                                    "description": "Dirección de la institución"
+                                },
+                                "fecha_creacion": {
+                                    "type": "string",
+                                    "description": "Fecha de creación de la institución en formato YYYY-MM-DD"
+                                },
+                                "proyectos": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id_del_proyecto": {
+                                                "type": "integer",
+                                                "description": "ID del proyecto"
+                                            },
+                                            "id_del_responsable": {
+                                                "type": "integer",
+                                                "description": "ID del responsable"
+                                            },
+                                            "nombre_proyecto": {
+                                                "type": "string",
+                                                "description": "Nombre del proyecto"
+                                            },
+                                            "nombre_responsable": {
+                                                "type": "string",
+                                                "description": "Nombre del responsable"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La institución no existe",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Mensaje de error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proyectos": {
+            "post": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "summary": "Crear un proyecto",
+                "description": "Este endpoint permite crear un proyecto en la base de datos.",
+                "operationId": "createProyecto",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Información del proyectos a crear",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Proyecto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "El proyectos se creó correctamente."
+                    },
+                    "400": {
+                        "description": "Hubo un error al crear el proyectos."
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "summary": "Obtener todos los proyectos",
+                "description": "Retorna una lista con todos los proyectos registrados en el sistema.",
+                "responses": {
+                    "200": {
+                        "description": "Lista de proyectos",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "usuarios": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proyectos/{id}": {
+            "get": {
+                "summary": "Obtener un proyectos por su ID",
+                "description": "Retorna la información de un proyectos en particular según su ID.",
+                "tags": [
+                    "Proyectos"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID del proyecto a obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Información del proyecto solicitado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Proyecto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "proyecto no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "summary": "Actualiza un proyecto existente por su id",
+                "description": "Permite actualizar los datos de un proyecto existente a través de su id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del proyecto a actualizar",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Datos del proyecto a actualizar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Proyecto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Proyecto actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Proyecto no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "summary": "Eliminar proyecto por ID",
+                "description": "Elimina un proyecto específico de la base de datos.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del proyecto a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Proyecto eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Proyecto eliminado correctamente"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Proyecto no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Proyecto no encontrado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/proyectos/tiempo-restante": {
+            "get": {
+                "tags": [
+                    "Proyectos"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Devuelve el tiempo restante en días para cada proyecto",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "description": "Nombre del proyecto"
+                                    },
+                                    "tiempo_restante": {
+                                        "type": "integer",
+                                        "description": "Tiempo restante en días para el proyecto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Obtiene el tiempo restante en días para cada proyecto",
+                "operationId": "get_proyectos_tiempo_restante"
+            }
+        },
+        "/todo": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Obtiene una lista de todos los usuarios, proyectos e instituciones",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "usuarios": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/Usuario"
+                                            }
+                                        },
+                                        "proyectos": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/Proyecto"
+                                            }
+                                        },
+                                        "instituciones": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/Institucion"
+                                            }
+                                        }
+                                    }
+                                }
+                            
+                        
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Usuario": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "apellidos": {
+                    "type": "string"
+                },
+                "rut": {
+                    "type": "string"
+                },
+                "fecha_nacimiento": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "cargo": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "Institucion": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "descripcion": {
+                    "type": "string"
+                },
+                "direccion": {
+                    "type": "string"
+                },
+                "fecha_creacion": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "Proyecto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "descripcion": {
+                    "type": "string"
+                },
+                "fecha_inicio": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "fecha_termino": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "responsable_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "institucion_id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        }
+    }
+}

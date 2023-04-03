@@ -18,7 +18,7 @@ Repositorio con un breve proyecto desarrollado con el framework Flask
 
 ## Suma Puntos
 * Crear documentación con Swagger
-    -   
+    - http://127.0.0.1:5000/api/docs/
 * Crear archivo Postman u otro.
     - /Kuantaz.postman_collection.json
 * Ocupa ORM de preferencia sqlalchemy

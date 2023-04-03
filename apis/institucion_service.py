@@ -12,13 +12,13 @@ def create_institucion():
     institucion = Institucion(**data)
     try:
         if len(institucion.validate())!=0:
-             return jsonify({'message': 'Error al crear la institución', 'error:': institucion.validate()})
+             return jsonify({'message': 'Error al crear la institución', 'error:': institucion.validate()}), 400
         db.session.add(institucion)
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'message': 'Error al crear la institución: {}'.format(str(e.orig))})
-    return jsonify({'message': 'Institución creada correctamente', 'id': institucion.id})
+        return jsonify({'message': 'Error al crear la institución: {}'.format(str(e.orig))}), 409
+    return jsonify({'message': 'Institución creada correctamente', 'id': institucion.id}), 201
 
 # READ ALL
 @institucion_endpoint.route('/instituciones', methods=['GET'])
@@ -60,7 +60,7 @@ def get_institucion(id):
             'descripcion': institucion.descripcion,
             'direccion': institucion.direccion,
             'fecha_creacion': str(institucion.fecha_creacion),
-            'proyectos': institucion.proyectos,
+            'proyectos': [proyecto.id for proyecto in institucion.proyectos],
         })
     else:
         return jsonify({'message': 'Institución no encontrada'})

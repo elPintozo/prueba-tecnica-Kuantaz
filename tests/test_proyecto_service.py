@@ -6,7 +6,7 @@ from config import get_database_uri_test, db
 from models.modelos import Institucion, Proyecto, Usuario
 
 
-class TestUsuario(unittest.TestCase):
+class TestProyecto(unittest.TestCase):
 
     def setUp(self):
         # Data complementaria para los proyectos
