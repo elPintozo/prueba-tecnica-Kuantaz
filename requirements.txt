@@ -1,6 +1,6 @@
 Flask==2.2.3
-psycopg2==2.9.5
-flask-restful-swagger-3==0.5.1
+psycopg2-binary==2.9.5
 markupsafe==2.1.2
 SQLAlchemy==2.0.8
 Flask-SQLAlchemy==3.0.3
+flask-swagger-ui==4.11.1

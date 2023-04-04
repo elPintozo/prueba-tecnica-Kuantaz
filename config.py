@@ -7,7 +7,7 @@ def get_database_uri():
     db_name = "kuantaz_db"
     db_user = "postgres"
     db_password = "postgres"
-    db_host = "localhost"
+    db_host = "db"
     db_port = "5432"  # puerto por defecto de PostgreSQL
 
     return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
@@ -16,7 +16,7 @@ def get_database_uri_test():
     db_name = "kuantaz_db"
     db_user = "postgres"
     db_password = "postgres"
-    db_host = "localhost"
+    db_host = "db"
     db_port = "5432"  # puerto por defecto de PostgreSQL
 
     return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?options=-c%20search_path=test"
